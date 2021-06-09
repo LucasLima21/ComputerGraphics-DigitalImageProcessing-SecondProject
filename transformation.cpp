@@ -1,44 +1,74 @@
+#include <iostream>
 #include <GL/gl.h>
 #include <GL/glu.h>
 #include <GL/glut.h>
 #include <math.h>
+#define PI 3.1415926
+using namespace std;
+
+void Square(float side){
+    glBegin(GL_QUADS);
+    glColor3f(1.0f, 0.0f, 0.0f);
+    glVertex2f(-side, side);
+    glColor3f(0.0f, 0.0f, 1.0f);
+    glVertex2f(-side,-side);
+    glColor3f(1.0f, 0.0f, 0.0f);
+    glVertex2f(side,-side);
+    glColor3f(0.0f, 0.0f, 1.0f);
+    glVertex2f(side,side);
+    glEnd();
+}
+
+void Circle(float r, int quantity){
+    glBegin(GL_POLYGON);
+    float cx = -12.0, cy = 0.0; // posições x e y
+    
+    for( int i = 0; i < quantity; i++){
+        float theta = (2.0f * PI * float(i)) / (float(100));
+        float x = r * cosf(theta);
+        float y = r * sinf(theta);
+        if(i < 150){
+            glColor3f(0.0f, 1.0f, 0.0f);
+            glVertex2f(x + cx, y + cy);
+        }
+        else{
+            glColor3f(1.0f, 0.0f, 0.0f);
+            glVertex2f(x + cx, y + cy);
+        }
+        
+    }
+    glEnd();
+}
+
+void Triangle(){
+    glBegin(GL_TRIANGLES);
+    glColor3f(1.0f, 0.0f, 0.0f);
+    // quarto parâmetro da função acima modifica a transparência
+    glVertex2f(12.0, 4.0);
+    glColor3f(0.0f, 1.0f, 0.0f);
+    glVertex2f(8.0, 0.0);
+    glColor3f(0.0f, 0.0f, 1.0f);
+    glVertex2f(16.0, 0.0);
+    
+    glEnd();
+}
 
 void display () {
     glClear(GL_COLOR_BUFFER_BIT);
     glLoadIdentity();
 
-    glBegin(GL_POLYGON);
-    float cx = -12.0, cy = 0.0; // posições x e y
-    float r = 2.2567583342;    // raio equivalente da mesma area das outras figuras raizQuadrada(16/pi)
-    for( int i = 0; i < 300; i++){
-        float theta = (2.0f * 3.1415926 * float(i)) / (float(100));
-        float x = r * cosf(theta);
-        float y = r * sinf(theta);
-        glColor3f(0.0f, 0.0f, 1.0f);
-        glVertex2f(x + cx, y + cy);
-    }
-    glEnd();
+
+    // glTranslatef(8, 8, 0); // tranlada
+    // glScalef(1.5,3,0); // aumenta escala em x,y,z
+    // glRotatef(60,0,0,1); // rotação de 60 graus em relação ao eixo Z
     
-    glBegin(GL_QUADS);
-    glColor3f(1.0f, 0.0f, 0.0f);
-    glVertex2f(-2.0, 2.0);
-    glVertex2f(-2.0,-2.0);
-    glVertex2f(2.0,-2.0);
-    glVertex2f(2.0,2.0);
-    glEnd();
+    glScalef(1, -1, 1); // 
+    Circle(2.2567583342, 300);    // raio equivalente da mesma area das outras figuras raizQuadrada(16/pi)
 
+    // glRotatef(45,0,1,1);
+    Square(2.0);
 
-
-    glBegin(GL_TRIANGLES);
-    glColor3f(0.0f, 1.0f, 0.0f);
-    // quarto parâmetro da função acima modifica a transparência
-    glVertex2f(12.0, 4.0);
-    glVertex2f(8.0, 0.0);
-    glVertex2f(16.0, 0.0);
-    
-    glEnd();
-
-
+    Triangle();
 
     glFlush();
 }
