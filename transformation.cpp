@@ -6,7 +6,7 @@
 #define PI 3.1415926
 using namespace std;
 
-void Square(float side){
+void square(float side){
     glBegin(GL_QUADS);
     glColor3f(1.0f, 0.0f, 0.0f);
     glVertex2f(-side, side);
@@ -19,7 +19,7 @@ void Square(float side){
     glEnd();
 }
 
-void Circle(float r, int quantity){
+void circle(float r, int quantity){
     glBegin(GL_POLYGON);
     float cx = -12.0, cy = 0.0; // posições x e y
     
@@ -40,18 +40,25 @@ void Circle(float r, int quantity){
     glEnd();
 }
 
-void Triangle(){
+void triangle(float side){
     glBegin(GL_TRIANGLES);
     glColor3f(1.0f, 0.0f, 0.0f);
     // quarto parâmetro da função acima modifica a transparência
-    glVertex2f(12.0, 4.0);
+    glVertex2f(3*side, side);
     glColor3f(0.0f, 1.0f, 0.0f);
-    glVertex2f(8.0, 0.0);
+    glVertex2f(2*side, 0.0);
     glColor3f(0.0f, 0.0f, 1.0f);
-    glVertex2f(16.0, 0.0);
+    glVertex2f(4*side, 0.0);
     
     glEnd();
 }
+
+void drawFiguresWithEqualArea(){
+    circle(2.2567583342, 300);    // raio equivalente da mesma area das outras figuras raizQuadrada(16/pi)
+    square(2.0); //lado do quadrado
+    triangle(4.0);
+}
+
 
 void display () {
     glClear(GL_COLOR_BUFFER_BIT);
@@ -62,13 +69,8 @@ void display () {
     // glScalef(1.5,3,0); // aumenta escala em x,y,z
     // glRotatef(60,0,0,1); // rotação de 60 graus em relação ao eixo Z
     
-    glScalef(1, -1, 1); // 
-    Circle(2.2567583342, 300);    // raio equivalente da mesma area das outras figuras raizQuadrada(16/pi)
-
-    // glRotatef(45,0,1,1);
-    Square(2.0);
-
-    Triangle();
+    glScalef(1, -1, 1); // Reflexão no eixo Y
+    drawFiguresWithEqualArea();
 
     glFlush();
 }
